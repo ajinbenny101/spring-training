@@ -1,0 +1,87 @@
+### 1) Create account (valid) - should return 201
+POST http://localhost:8085/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "12345678",
+  "sortCode": "12-34-56",
+  "holderName": "Jane Smith",
+  "openingBalance": 500.00
+}
+
+
+### 2) Create account (blank holderName) - should return 400
+POST http://localhost:8085/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "12345678",
+  "sortCode": "12-34-56",
+  "holderName": "",
+  "openingBalance": 500.00
+}
+
+
+### 3) Create account (bad accountNumber - not 8 digits) - should return 400
+POST http://localhost:8085/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "ABC",
+  "sortCode": "12-34-56",
+  "holderName": "Jane Smith",
+  "openingBalance": 500.00
+}
+
+
+### 4) Create account (bad sortCode - wrong format) - should return 400
+POST http://localhost:8085/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "12345678",
+  "sortCode": "123456",
+  "holderName": "Jane Smith",
+  "openingBalance": 500.00
+}
+
+
+### 5) Create account (negative balance) - should return 400
+POST http://localhost:8085/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "12345678",
+  "sortCode": "12-34-56",
+  "holderName": "Jane Smith",
+  "openingBalance": -50.00
+}
+
+
+### 6) Create account (edge case - zero balance) - should return 201
+POST http://localhost:8085/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "87654321",
+  "sortCode": "99-88-77",
+  "holderName": "John Doe",
+  "openingBalance": 0.00
+}
+
+
+### 7) Create account (edge case - multiple errors) - should return 400 with multiple field errors
+POST http://localhost:8085/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "",
+  "sortCode": "bad",
+  "holderName": "",
+  "openingBalance": -100
+}
+
+
+### 8) List all accounts - should return 200
+GET http://localhost:8085/api/accounts
+Accept: application/json

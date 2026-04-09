@@ -1,0 +1,57 @@
+### 1) Create account (valid) -> 201
+POST http://localhost:8086/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "12345678",
+  "holderName": "Asha Patel",
+  "openingBalance": 1000.00
+}
+
+
+### 2) Create duplicate account -> 409
+POST http://localhost:8086/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "12345678",
+  "holderName": "Someone Else",
+  "openingBalance": 500.00
+}
+
+
+### 3) Get existing account -> 200
+GET http://localhost:8086/api/accounts/12345678
+Accept: application/json
+
+
+### 4) Get missing account -> 404
+GET http://localhost:8086/api/accounts/99999999
+Accept: application/json
+
+
+### 5) Deposit money -> 200
+PATCH http://localhost:8086/api/accounts/12345678/deposit
+Content-Type: application/json
+
+{
+  "amount": 250.00
+}
+
+
+### 6) Withdraw (success) -> 200
+PATCH http://localhost:8086/api/accounts/12345678/withdraw
+Content-Type: application/json
+
+{
+  "amount": 200.00
+}
+
+
+### 7) Withdraw too much -> 400
+PATCH http://localhost:8086/api/accounts/12345678/withdraw
+Content-Type: application/json
+
+{
+  "amount": 99999.00
+}

@@ -1,0 +1,33 @@
+### 1) Convert 100 GBP to USD - expect 200 with conversion result
+GET http://localhost:8089/api/convert?from=GBP&to=USD&amount=100
+Accept: application/json
+
+
+### 2) Convert 250 GBP to EUR - expect 200 with conversion result
+GET http://localhost:8089/api/convert?from=GBP&to=EUR&amount=250
+Accept: application/json
+
+
+### 3) Convert 50 USD to GBP - expect 200 with conversion result
+GET http://localhost:8089/api/convert?from=USD&to=GBP&amount=50
+Accept: application/json
+
+
+### 4) Invalid source currency - expect 400 with CONVERSION_ERROR
+GET http://localhost:8089/api/convert?from=XYZ&to=USD&amount=100
+Accept: application/json
+
+
+### 5) Invalid target currency - expect 400 with CONVERSION_ERROR
+GET http://localhost:8089/api/convert?from=GBP&to=XYZ&amount=100
+Accept: application/json
+
+
+### 6) Convert 1000 INR to USD - expect 200 with conversion result
+GET http://localhost:8089/api/convert?from=INR&to=USD&amount=1000
+Accept: application/json
+
+
+### 7) Convert 500 EUR to GBP - expect 200 with conversion result
+GET http://localhost:8089/api/convert?from=EUR&to=GBP&amount=500
+Accept: application/json

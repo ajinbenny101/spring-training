@@ -1,0 +1,44 @@
+### Health check - public endpoint, no key needed (expect 200)
+GET http://localhost:8090/api/public/health
+
+###
+
+### Get accounts - no API key (expect 401)
+GET http://localhost:8090/api/admin/accounts
+
+###
+
+### Get accounts - wrong API key (expect 401)
+GET http://localhost:8090/api/admin/accounts
+X-API-KEY: wrong-key
+
+###
+
+### Get accounts - valid API key (expect 200)
+GET http://localhost:8090/api/admin/accounts
+X-API-KEY: secret-key-123
+
+###
+
+### Create account - valid API key (expect 201)
+POST http://localhost:8090/api/admin/accounts
+Content-Type: application/json
+X-API-KEY: secret-key-123
+
+{
+  "accountNumber": "12345678",
+  "holderName": "Asha Patel",
+  "balance": 1000.00
+}
+
+###
+
+### Create account - no API key (expect 401)
+POST http://localhost:8090/api/admin/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "12345678",
+  "holderName": "Asha Patel",
+  "balance": 1000.00
+}

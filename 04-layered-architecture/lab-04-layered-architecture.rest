@@ -1,0 +1,81 @@
+### 1) Create account (valid) - should return 201
+POST http://localhost:8084/api/accounts
+Content-Type: application/json
+
+{
+  "holderName": "Asha Patel",
+  "sortCode": "12-34-56",
+  "openingBalance": 1500.00
+}
+
+
+### 2) Create another account - should return 201
+POST http://localhost:8084/api/accounts
+Content-Type: application/json
+
+{
+  "holderName": "Ravi Kumar",
+  "sortCode": "77-88-99",
+  "openingBalance": 250.00
+}
+
+
+### 3) Create account (missing holderName) - should return 400
+POST http://localhost:8084/api/accounts
+Content-Type: application/json
+
+{
+  "sortCode": "11-22-33",
+  "openingBalance": 100.00
+}
+
+
+### 4) Create account (missing sortCode) - should return 400
+POST http://localhost:8084/api/accounts
+Content-Type: application/json
+
+{
+  "holderName": "Bad Request",
+  "openingBalance": 500.00
+}
+
+
+### 5) Create account (negative balance) - should return 400
+POST http://localhost:8084/api/accounts
+Content-Type: application/json
+
+{
+  "holderName": "Negative Nancy",
+  "sortCode": "00-00-00",
+  "openingBalance": -50.00
+}
+
+
+### 6) Get all accounts - should return 200
+GET http://localhost:8084/api/accounts
+Accept: application/json
+
+
+### 7) Get one account - should return 200
+GET http://localhost:8084/api/accounts/ACC-1
+Accept: application/json
+
+
+### 8) Get missing account - should return 404
+GET http://localhost:8084/api/accounts/ACC-999
+Accept: application/json
+
+
+### 9) Delete an account - should return 200
+DELETE http://localhost:8084/api/accounts/ACC-1
+Accept: application/json
+
+
+### 10) Delete missing account - should return 404
+DELETE http://localhost:8084/api/accounts/ACC-999
+Accept: application/json
+
+
+### 11) Verify deletion - GET all should show only remaining accounts
+GET http://localhost:8084/api/accounts
+Accept: application/json

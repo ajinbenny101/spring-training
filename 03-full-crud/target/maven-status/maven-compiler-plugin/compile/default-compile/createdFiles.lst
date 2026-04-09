@@ -1,0 +1,6 @@
+com\training\banking\ErrorResponse.class
+com\training\banking\CreateAccountRequest.class
+com\training\banking\Lab03FullCrudApplication.class
+com\training\banking\Account.class
+com\training\banking\AmountRequest.class
+com\training\banking\UpdateAccountRequest.class

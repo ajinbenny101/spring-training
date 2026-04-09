@@ -1,0 +1,38 @@
+### 1) Default params - no accountType, no currency (should default to CURRENT + GBP)
+GET http://localhost:8081/api/rates
+Accept: application/json
+
+
+### 2) Specific accountType - savings
+GET http://localhost:8081/api/rates?accountType=savings
+Accept: application/json
+
+
+### 3) Case insensitivity - mixed case should work
+GET http://localhost:8081/api/rates?accountType=SaViNgS&currency=eur
+Accept: application/json
+
+
+### 4) Invalid accountType - should return 400 error
+GET http://localhost:8081/api/rates?accountType=premium
+Accept: application/json
+
+
+### 5) Different currency - USD
+GET http://localhost:8081/api/rates?accountType=isa&currency=USD
+Accept: application/json
+
+
+### 6) Blank accountType - should default to CURRENT
+GET http://localhost:8081/api/rates?accountType=&currency=GBP
+Accept: application/json
+
+
+### 7) ISA account type
+GET http://localhost:8081/api/rates?accountType=ISA
+Accept: application/json
+
+
+### 8) All params specified explicitly
+GET http://localhost:8081/api/rates?accountType=current&currency=EUR
+Accept: application/json

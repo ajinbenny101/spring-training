@@ -1,0 +1,89 @@
+### 1) Create account (savings) - should get 201
+POST http://localhost:8083/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "ACC001",
+  "holderName": "Priya Sharma",
+  "accountType": "SAVINGS",
+  "openingBalance": 1000.00
+}
+
+
+### 2) Create another account (current) - should get 201
+POST http://localhost:8083/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "ACC002",
+  "holderName": "Rahul Mehta",
+  "accountType": "CURRENT",
+  "openingBalance": 5000.00
+}
+
+
+### 3) List all accounts - should see both accounts
+GET http://localhost:8083/api/accounts
+Accept: application/json
+
+
+### 4) Get one account - should see ACC001
+GET http://localhost:8083/api/accounts/ACC001
+Accept: application/json
+
+
+### 5) Update account details (PUT) - change name and type
+PUT http://localhost:8083/api/accounts/ACC001
+Content-Type: application/json
+
+{
+  "holderName": "Priya Sharma-Patel",
+  "accountType": "CURRENT"
+}
+
+
+### 6) Deposit money - balance should increase from 1000 to 1500
+PATCH http://localhost:8083/api/accounts/ACC001/deposit
+Content-Type: application/json
+
+{
+  "amount": 500.00
+}
+
+
+### 7) Withdraw money - balance should decrease from 1500 to 1200
+PATCH http://localhost:8083/api/accounts/ACC001/withdraw
+Content-Type: application/json
+
+{
+  "amount": 300.00
+}
+
+
+### 8) Delete account - should get confirmation message
+DELETE http://localhost:8083/api/accounts/ACC002
+Accept: application/json
+
+
+### 9) Get deleted account - should get 404
+GET http://localhost:8083/api/accounts/ACC002
+Accept: application/json
+
+
+### 10) Withdraw more than balance - should get 400
+PATCH http://localhost:8083/api/accounts/ACC001/withdraw
+Content-Type: application/json
+
+{
+  "amount": 99999.00
+}
+
+
+### 11) Update non-existent account - should get 404
+PUT http://localhost:8083/api/accounts/ACC999
+Content-Type: application/json
+
+{
+  "holderName": "Ghost",
+  "accountType": "SAVINGS"
+}

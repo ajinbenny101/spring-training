@@ -1,0 +1,104 @@
+### 1) Create account (valid) - expect 201 Created
+POST http://localhost:8082/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "12345678",
+  "sortCode": "12-34-56",
+  "holderName": "Asha Patel",
+  "openingBalance": 1000.00
+}
+
+
+### 2) Create duplicate account - expect 409 Conflict
+POST http://localhost:8082/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "12345678",
+  "sortCode": "12-34-56",
+  "holderName": "Asha Patel Again",
+  "openingBalance": 500.00
+}
+
+
+### 3) Missing holder name - expect 400 Bad Request
+POST http://localhost:8082/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "22222222",
+  "sortCode": "11-22-33",
+  "holderName": "",
+  "openingBalance": 100.00
+}
+
+
+### 4) Bad account number (too short) - expect 400 Bad Request
+POST http://localhost:8082/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "123",
+  "sortCode": "11-22-33",
+  "holderName": "Bad Account",
+  "openingBalance": 100.00
+}
+
+
+### 5) Bad account number (contains letters) - expect 400 Bad Request
+POST http://localhost:8082/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "ABCD1234",
+  "sortCode": "11-22-33",
+  "holderName": "Letters In Account",
+  "openingBalance": 100.00
+}
+
+
+### 6) Bad sort code format - expect 400 Bad Request
+POST http://localhost:8082/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "33333333",
+  "sortCode": "1234-56",
+  "holderName": "Bad Sort Code",
+  "openingBalance": 100.00
+}
+
+
+### 7) Negative opening balance - expect 400 Bad Request
+POST http://localhost:8082/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "44444444",
+  "sortCode": "11-22-33",
+  "holderName": "Negative Balance",
+  "openingBalance": -50.00
+}
+
+
+### 8) Get existing account - expect 200 OK (run test 1 first)
+GET http://localhost:8082/api/accounts/12345678
+Accept: application/json
+
+
+### 9) Get missing account - expect 404 Not Found
+GET http://localhost:8082/api/accounts/99999999
+Accept: application/json
+
+
+### 10) Create second valid account - expect 201 Created
+POST http://localhost:8082/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "87654321",
+  "sortCode": "99-88-77",
+  "holderName": "Ravi Kumar",
+  "openingBalance": 0.00
+}

@@ -1,0 +1,100 @@
+### 1) Create a customer - should get 200 with customer JSON
+POST http://localhost:8088/api/customers
+Content-Type: application/json
+
+{
+  "name": "Asha",
+  "email": "asha@example.com"
+}
+
+
+### 2) Create a second customer - should get 200
+POST http://localhost:8088/api/customers
+Content-Type: application/json
+
+{
+  "name": "Rahul",
+  "email": "rahul@example.com"
+}
+
+
+### 3) Create an account for customer 1 - should get 200
+POST http://localhost:8088/api/customers/1/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "12345678"
+}
+
+
+### 4) Create a second account for customer 1 - should get 200
+POST http://localhost:8088/api/customers/1/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "87654321"
+}
+
+
+### 5) Create a deposit transaction on account 1 - balance should become 500
+POST http://localhost:8088/api/accounts/1/transactions
+Content-Type: application/json
+
+{
+  "type": "DEPOSIT",
+  "amount": 500.00,
+  "description": "Initial deposit"
+}
+
+
+### 6) Create another deposit on account 1 - balance should become 1500
+POST http://localhost:8088/api/accounts/1/transactions
+Content-Type: application/json
+
+{
+  "type": "DEPOSIT",
+  "amount": 1000.00,
+  "description": "Salary credit"
+}
+
+
+### 7) Create a withdrawal on account 1 - balance should become 1300
+POST http://localhost:8088/api/accounts/1/transactions
+Content-Type: application/json
+
+{
+  "type": "WITHDRAWAL",
+  "amount": 200.00,
+  "description": "ATM withdrawal"
+}
+
+
+### 8) Create a deposit on account 2 - balance should become 250
+POST http://localhost:8088/api/accounts/2/transactions
+Content-Type: application/json
+
+{
+  "type": "DEPOSIT",
+  "amount": 250.00,
+  "description": "Initial deposit"
+}
+
+
+### 9) Get customer 1 - should see customer with 2 accounts and their transactions
+GET http://localhost:8088/api/customers/1
+Accept: application/json
+
+
+### 10) Get customer 2 - should see customer with no accounts
+GET http://localhost:8088/api/customers/2
+Accept: application/json
+
+
+### 11) Get transactions for account 1 - should see 3 transactions
+GET http://localhost:8088/api/accounts/1/transactions
+Accept: application/json
+
+
+### 12) Get transactions for account 2 - should see 1 transaction
+GET http://localhost:8088/api/accounts/2/transactions
+Accept: application/json

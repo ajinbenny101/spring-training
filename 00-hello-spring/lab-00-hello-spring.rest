@@ -1,0 +1,13 @@
+### 1) Health check — should return status UP
+GET http://localhost:8080/api/health
+Accept: application/json
+
+
+### 2) Welcome with no name — should default to "Customer"
+GET http://localhost:8080/api/welcome
+Accept: application/json
+
+
+### 3) Welcome with name — should greet by name
+GET http://localhost:8080/api/welcome?name=Chinmay
+Accept: application/json

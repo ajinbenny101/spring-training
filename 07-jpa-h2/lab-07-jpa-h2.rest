@@ -1,0 +1,40 @@
+### 1) Create an account - should get 201 with auto-generated ID
+POST http://localhost:3306/banking
+Content-Type: application/json
+
+{
+  "accountNumber": "ACC-10001",
+  "holderName": "Priya Sharma",
+  "balance": 1000.00
+}
+
+
+### 2) Create another account - should get 201 with a different ID
+POST http://localhost:8087/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": "ACC-20002",
+  "holderName": "Rahul Mehta",
+  "balance": 5000.00
+}
+
+
+### 3) List all accounts - should see both accounts
+GET http://localhost:8087/api/accounts
+Accept: application/json
+
+
+### 4) Get one account by ID - should see Priya's account
+GET http://localhost:8087/api/accounts/1
+Accept: application/json
+
+
+### 5) Delete an account - should get 204 No Content
+DELETE http://localhost:8087/api/accounts/2
+Accept: application/json
+
+
+### 6) Get deleted account - should get 404
+GET http://localhost:8087/api/accounts/2
+Accept: application/json
