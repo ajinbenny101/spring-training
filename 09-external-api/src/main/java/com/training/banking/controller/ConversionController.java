@@ -6,6 +6,9 @@ import com.training.banking.service.ExchangeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 /**
  * Controller that handles currency conversion requests.
@@ -21,7 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class ConversionController {
+    private final ExchangeService exchangeService;  
 
+    public ConversionController(ExchangeService exchangeService) {
+        this.exchangeService = exchangeService;
+    }
     // ----------------------------------------------------------------
     // TODO 5: Inject ExchangeService via constructor injection
     //
@@ -50,48 +57,24 @@ public class ConversionController {
     //
     // The @RequestParam annotations are already in place - they tell
     // Spring to pull "from", "to", and "amount" from the query string.
-    // ----------------------------------------------------------------
+       @GetMapping("/api/convert")
     public ResponseEntity<?> convert(@RequestParam String from,
                                      @RequestParam String to,
                                      @RequestParam double amount) {
 
         try {
-
-            // ----------------------------------------------------------------
-            // TODO 7: Call the service and build the response
-            //
-            // Steps:
-            //   1. Get the rate: double rate = exchangeService.getRate(from, to);
-            //   2. Calculate:    double convertedAmount = amount * rate;
-            //   3. Build the response:
-            //        ConversionResponse response = new ConversionResponse(
-            //            from, to, amount, rate, convertedAmount
-            //        );
-            //   4. Return it:   return ResponseEntity.ok(response);
-            //
-            // Write your code here:
-            // ----------------------------------------------------------------
-
-            // Remove this line once you complete TODO 7:
-            return ResponseEntity.ok("TODO: implement conversion logic");
+            double rate = exchangeService.getRate(from, to);
+            double convertedAmount = amount * rate;
+            ConversionResponse response = new ConversionResponse(
+                from, to, amount, rate, convertedAmount
+            );
+            return ResponseEntity.ok(response);
 
         } catch (Exception e) {
 
-            // ----------------------------------------------------------------
-            // TODO 8: Return a 400 error response
-            //
-            // If anything goes wrong (bad currency, API down, etc.),
-            // we end up here. Return a clean error:
-            //
-            //   return ResponseEntity.badRequest()
-            //       .body(new ErrorResponse("CONVERSION_ERROR",
-            //           "Could not convert from " + from + " to " + to));
-            //
-            // Write your error response here:
-            // ----------------------------------------------------------------
-
-            // Remove this line once you complete TODO 8:
-            return ResponseEntity.badRequest().body("TODO: implement error handling");
+            return ResponseEntity.badRequest()
+                .body(new ErrorResponse("CONVERSION_ERROR",
+                    "Could not convert from " + from + " to " + to));
         }
     }
 }

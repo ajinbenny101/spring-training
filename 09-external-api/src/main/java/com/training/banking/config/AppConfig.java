@@ -1,5 +1,7 @@
 package com.training.banking.config;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -23,6 +25,7 @@ import org.springframework.web.client.RestTemplate;
 //
 // Add the annotation right above the class declaration below.
 // ----------------------------------------------------------------
+@Configuration
 public class AppConfig {
 
     // ----------------------------------------------------------------
@@ -41,8 +44,9 @@ public class AppConfig {
     // This tells Spring: "Create a RestTemplate object once and keep it
     // ready. When any class asks for a RestTemplate, give them this one."
     // ----------------------------------------------------------------
+    @Bean
     public RestTemplate restTemplate() {
         // Replace this with: return new RestTemplate();
-        return null;
+        return new RestTemplate();
     }
 }
