@@ -2,48 +2,34 @@ package com.training.banking.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-
-// TODO 4: Add @Entity annotation to mark this class as a JPA entity.
-// Also add @Id and @GeneratedValue(strategy = GenerationType.IDENTITY) to the id field below.
-//
-// Hint: import jakarta.persistence.Entity;
-// Hint: import jakarta.persistence.Id;
-// Hint: import jakarta.persistence.GeneratedValue;
-// Hint: import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+@Entity
 public class Account {
-
-    // TODO 4 (continued): Add @Id and @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String accountNumber;
 
     private double balance;
 
-    // TODO 5: Add the following three annotations to this field:
-    //   @ManyToOne
-    //   @JoinColumn(name = "customer_id")
-    //   @JsonBackReference
-    //
-    // @ManyToOne tells JPA that many accounts belong to one customer.
-    // @JoinColumn(name = "customer_id") creates a customer_id column in the accounts table.
-    // @JsonBackReference tells Jackson to skip this field in JSON output (prevents infinite loop).
-    //
-    // Hint: import jakarta.persistence.ManyToOne;
-    // Hint: import jakarta.persistence.JoinColumn;
-    // Hint: import com.fasterxml.jackson.annotation.JsonBackReference;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    @JsonBackReference
     private Customer customer;
 
-    // TODO 6: Add the following two annotations to this field:
-    //   @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    //   @JsonManagedReference
-    //
-    // Same pattern as Customer -> Accounts, but now Account -> Transactions.
-    // One account has many transactions.
-    // mappedBy = "account" points to the 'account' field in the Transaction entity.
-    //
-    // Hint: import jakarta.persistence.OneToMany;
-    // Hint: import jakarta.persistence.CascadeType;
-    // Hint: import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Transaction> transactions = new ArrayList<>();
 
     public Account() {

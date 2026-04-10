@@ -1,5 +1,5 @@
 ### 1) Create an account - should get 201 with auto-generated ID
-POST http://localhost:3306/banking
+POST http://localhost:8087/api/accounts
 Content-Type: application/json
 
 {

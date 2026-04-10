@@ -2,16 +2,22 @@ package com.training.banking.entity;
 
 import java.time.LocalDateTime;
 
-// TODO 7: Add @Entity annotation to mark this class as a JPA entity.
-// Also add @Id and @GeneratedValue(strategy = GenerationType.IDENTITY) to the id field below.
-//
-// Hint: import jakarta.persistence.Entity;
-// Hint: import jakarta.persistence.Id;
-// Hint: import jakarta.persistence.GeneratedValue;
-// Hint: import jakarta.persistence.GenerationType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+
+
+
+@Entity
 public class Transaction {
 
-    // TODO 7 (continued): Add @Id and @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String type;
@@ -22,18 +28,9 @@ public class Transaction {
 
     private String description;
 
-    // TODO 8: Add the following three annotations to this field:
-    //   @ManyToOne
-    //   @JoinColumn(name = "account_id")
-    //   @JsonBackReference
-    //
-    // @ManyToOne tells JPA that many transactions belong to one account.
-    // @JoinColumn(name = "account_id") creates an account_id column in the transactions table.
-    // @JsonBackReference tells Jackson to skip this field in JSON output (prevents infinite loop).
-    //
-    // Hint: import jakarta.persistence.ManyToOne;
-    // Hint: import jakarta.persistence.JoinColumn;
-    // Hint: import com.fasterxml.jackson.annotation.JsonBackReference;
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    @JsonBackReference
     private Account account;
 
     public Transaction() {
